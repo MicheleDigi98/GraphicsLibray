@@ -15,7 +15,6 @@ void* gameLoopFunction(void* gameLoopArgs){
     GameLoopArgs *args = (GameLoopArgs*)gameLoopArgs;
     while (args->context->isValid){
         hideCursor();
-        clearScreen(args->context);
         args->updateFunction(args->context);
         drawFrame(args->context);
         drawContext(*args->context);
