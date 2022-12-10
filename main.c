@@ -10,16 +10,17 @@ int posY = 10;              //Indica la posizione Y dell'elemento di esempio
  * @param context Contesto grafico di disegno
  */
 void update(Context *context){
-    //Il 178 è un carattere ASCII
+    //Puliamo lo schermo
+    clearScreen(context);
+
     drawPoint(context, 1, 1, 'v');
     drawPoint(context, 2, 1, ' ');
     drawPoint(context, 3, 1, '1');
     drawPoint(context, 4, 1, '.');
     drawPoint(context, 5, 1, '0');
-    drawPoint(context, posX, posY, (char)178);
 
-    //Puliamo lo schermo
-    clearScreen(context);
+    //Il 178 è un carattere ASCII
+    drawPoint(context, posX, posY, (char)178);
 }
 
 /**
