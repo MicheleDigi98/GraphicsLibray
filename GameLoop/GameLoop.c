@@ -11,6 +11,7 @@
  */
 void* gameLoopFunction(void* gameLoopArgs){
     printf("Game loop thread started\n");
+    system("cls");
     GameLoopArgs *args = (GameLoopArgs*)gameLoopArgs;
     while (args->context->isValid){
         clearScreen(args->context);
@@ -38,7 +39,7 @@ void startGameLoop(void (*updateFunction)(Context*), void (*onPressFunction)(cha
     if(updateFunction != NULL && context != NULL && context->isValid){
         updateFunction(context);
 
-        GameLoopArgs* args = malloc(sizeof(GameLoopArgs));
+        GameLoopArgs* args = (GameLoopArgs*)malloc(sizeof(GameLoopArgs));
         args->updateFunction = updateFunction;
         args->onPressFunction = onPressFunction;
         args->context = context;
