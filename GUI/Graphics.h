@@ -5,6 +5,10 @@
 #ifndef GRAPHICSLIBRAY_GRAPHICS_H
 #define GRAPHICSLIBRAY_GRAPHICS_H
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <windows.h>
+
 /**
  * Definisce la struttura che rappresenta il contesto di grafica dell'applicazione
  */

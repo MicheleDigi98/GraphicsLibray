@@ -1,15 +1,31 @@
-#include <stdio.h>
 #include "GUI/Graphics.h"
-#include <pthread.h>
-#include <conio.h>
+#include "GameLoop/GameLoop.h"
 
-void* render(void* context){
-    Context *ctx = (Context*)context;
-    if(context != NULL && ctx->isValid){
-        while (ctx->isValid) {
-            drawFrame(context);
-            drawContext(*ctx);
-        }
+int posX = 10;
+int posY = 10;
+
+
+void update(Context *context){
+    drawPoint(context, posX, posY, 178);
+}
+
+void keyBoard(char character, Context* context){
+    switch (character) {
+        case 'w':
+            posY--;
+            break;
+        case 's':
+            posY++;
+            break;
+        case 'a':
+            posX--;
+            break;
+        case 'd':
+            posX++;
+            break;
+        case 'p':
+            destroyContext(context);
+            break;
     }
 }
 
@@ -17,14 +33,9 @@ int main() {
     hideCursor();
     Context context = initContext(80, 20);
 
-    drawLine(&context, 1, 10 , 70, 2, 178);
+    startGameLoop(update, keyBoard, &context);
 
-    pthread_t renderThread;
-    pthread_create(&renderThread, NULL, render, &context);
-
-    getch();
-    destroyContext(&context);
-    pthread_join(renderThread, NULL);
+    while (context.isValid);
     showCursor();
     return 0;
 }

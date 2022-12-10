@@ -3,9 +3,6 @@
 //
 
 #include "Graphics.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <windows.h>
 
 void gotoXY(unsigned int x, unsigned int y){
     COORD coord = {x, y};
