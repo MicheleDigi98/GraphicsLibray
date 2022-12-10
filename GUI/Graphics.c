@@ -9,6 +9,34 @@ void gotoXY(unsigned int x, unsigned int y){
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
+void setColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char intensity){
+    unsigned short esito = 0x0;
+    if(red)
+        esito |= FOREGROUND_RED;
+    if(green)
+        esito |= FOREGROUND_GREEN;
+    if(blue)
+        esito |= FOREGROUND_BLUE;
+    if(intensity)
+        esito |= FOREGROUND_INTENSITY;
+
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), esito);
+}
+
+void setBGColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char intensity){
+    unsigned short esito = 0x0;
+    if(red)
+        esito |= BACKGROUND_RED;
+    if(green)
+        esito |= BACKGROUND_GREEN;
+    if(blue)
+        esito |= BACKGROUND_BLUE;
+    if(intensity)
+        esito |= BACKGROUND_INTENSITY;
+
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), esito);
+}
+
 void hideCursor(){
     CONSOLE_CURSOR_INFO info;
     info.dwSize = 100;

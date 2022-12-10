@@ -27,6 +27,24 @@ typedef struct {
 void gotoXY(unsigned int x, unsigned int y);
 
 /**
+ * Imposta il colore con cui disegnare sul prompt, i valori possono assumere solo 0 o 1
+ * @param red Presenza di rosso
+ * @param green Presenza di verde
+ * @param blue Presenza di blue
+ * @param intensity Modificatore di intensità
+ */
+void setColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char intensity);
+
+/**
+ * Imposta il colore di sfondo, i valori possono assumere solo 0 o 1
+ * @param red Presenza di rosso
+ * @param green Presenza di verde
+ * @param blue Presenza di blue
+ * @param intensity Modificatore di intensità
+ */
+void setBGColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char intensity);
+
+/**
  * Nasconde il cursore
  */
 void hideCursor();

@@ -48,6 +48,9 @@ int main() {
     hideCursor();                                                                       //Nasconde il cursore
     Context context = initContext(80, 20);                                  //Inizializza un contesto di disegno 80*20
 
+    setColor(1, 1, 0, 1);
+    setBGColor(0, 0, 1, 1);
+
     startGameLoop(update, keyBoard, &context);          //Avvia l'esecuzione del gameloop
 
     //Attende fino a quando l'utente non preme p per terminare l'esecuzioen
@@ -62,5 +65,7 @@ int main() {
      * 3) void drawPoint(Context *context, int posX, int posY, char character) -> Disegna un punto sul contesto
      * 4) void drawRect(Context *context, int posX, int posY, int width, int height, char character) -> Disegna un rettangolo sul contesto
      * 5) void drawLine(Context *context, int x1, int y1, int x2, int y2, char character)-> Disegna una linea sul contesto
+     * 6) setColor(red, green, blue, intensity) Con valori ammessi solo 0 e 1 cambia il colore del cursore
+     * 7) setBGColor Come sopra ma cambia il colore del background
      */
 }
