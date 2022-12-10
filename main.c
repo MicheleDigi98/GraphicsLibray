@@ -11,7 +11,7 @@ int posY = 10;              //Indica la posizione Y dell'elemento di esempio
  */
 void update(Context *context){
     //Il 178 è un carattere ASCII
-    drawRect(context, posX - 2, posY - 2, 4, 4, 178);
+    drawPoint(context, posX, posY, 178);
 }
 
 /**
