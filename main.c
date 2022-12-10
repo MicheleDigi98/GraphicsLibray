@@ -48,10 +48,9 @@ int main() {
     hideCursor();                                                                       //Nasconde il cursore
     Context context = initContext(80, 20);                                  //Inizializza un contesto di disegno 80*20
 
-    setColor(1, 1, 0, 1);
-    setBGColor(0, 0, 1, 1);
+    setColor(1, 1, 0, 1);                                        //Imposta il colore del testo
 
-    startGameLoop(update, keyBoard, &context);          //Avvia l'esecuzione del gameloop
+    startGameLoop(update, keyBoard, &context);         //Avvia l'esecuzione del gameloop
 
     //Attende fino a quando l'utente non preme p per terminare l'esecuzioen
     while (context.isValid);
