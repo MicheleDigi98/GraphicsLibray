@@ -66,5 +66,6 @@ int main() {
      * 5) void drawLine(Context *context, int x1, int y1, int x2, int y2, char character)-> Disegna una linea sul contesto
      * 6) setColor(red, green, blue, intensity) Con valori ammessi solo 0 e 1 cambia il colore del cursore
      * 7) setBGColor Come sopra ma cambia il colore del background
+     * 8) clearScreen(Context *context) -> Effettua la pulizia dello schermo
      */
 }
