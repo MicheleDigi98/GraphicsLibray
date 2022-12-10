@@ -5,7 +5,7 @@
 #ifndef GRAPHICSLIBRAY_GAMELOOP_H
 #define GRAPHICSLIBRAY_GAMELOOP_H
 
-#include "../GUI/Graphics.h";
+#include "../GUI/Graphics.h"
 
 typedef struct {
     void (*updateFunction)(*Context);

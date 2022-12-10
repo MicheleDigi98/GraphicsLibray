@@ -1,5 +1,5 @@
 //
-// Created by utente on 10/12/2022.
+// Created by Michele Digiacomo on 10/12/2022.
 //
 
 #include "Graphics.h"
@@ -24,10 +24,6 @@ void showCursor(){
     info.dwSize = 10;
     info.bVisible = TRUE;
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
-}
-
-void refreshPrompt(){
-    system("cls");
 }
 
 void clearScreen(Context *context){

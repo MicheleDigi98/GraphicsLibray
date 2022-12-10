@@ -33,11 +33,6 @@ void hideCursor();
 void showCursor();
 
 /**
- * Avvia la pulizia del prompt che sta eseguendo il programma
- */
-void refreshPrompt();
-
-/**
  * Effettua la pulizia dello schermo
  * @param context Contesto di grafica da pulire
  */
