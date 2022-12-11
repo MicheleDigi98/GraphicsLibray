@@ -6,40 +6,7 @@
 
 char* numberToString(float number){
     char* esito = (char*)malloc(sizeof(char) * STRING_MAX_LENGTH);
-    int cPosition = 0;
-
-    //Controllo del segno
-    if(number < 0)
-        *(esito + cPosition++) = '-';
-
-    //Positivizzazione
-    number = number < 0 ? -number : number;
-
-    //Calcolo del vPointer e trasformazione del numero per avere come parte intera 0
-    int vPointer = 0;
-    while(((int)number) > 0) {
-        //Dividiamo per 10 in modo tale da spostare la virgola a sinistra fino a quando non si avrà 0,...
-        number /= 10;
-        vPointer ++;
-    }
-
-    //Operazione inversa, spostando la virgola a destra di una posizione alla volta in modo tale da trascrivere la parte intera sul buffer
-    while (number > 0.01 || vPointer > 0){
-        number *= 10;
-        //Se il vPointer(virgola pointer) è 0 e siamo entrati nel ciclo allora mettiamo il carattere del punto
-        if(vPointer == 0)
-            *(esito + cPosition++) = '.';
-
-        //Usiamo la trasposizione ascii per scrivere il carattere corretto
-        *(esito + cPosition++) = 48 + ((int)number);
-
-        //Togliamo la parte intera e decrementiamo il vpointer
-        number -= (int)number;
-        vPointer--;
-    }
-
-    *(esito + cPosition++) = '\0';
-
+    sprintf(esito, "%.2f", number);
     return esito;
 }
 
