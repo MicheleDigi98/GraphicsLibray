@@ -32,16 +32,20 @@ void update(Context *context){
 void keyBoard(char character, Context* context){
     switch (character) {
         case 'w':
-            posY--;
+            if(posY - 1 > 0)
+                posY--;
             break;
         case 's':
-            posY++;
+            if(posY + 1 < context->height - 1)
+                posY++;
             break;
         case 'a':
-            posX--;
+            if(posX - 1 > 0)
+                posX--;
             break;
         case 'd':
-            posX++;
+            if(posX + 1 < context->width - 1)
+                posX++;
             break;
         case 'p':
             //Se viene premuto il tasto p l'esecuzione termina
