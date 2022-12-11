@@ -4,6 +4,45 @@
 
 #include "Graphics.h"
 
+char* numberToString(float number){
+    char* esito = (char*)malloc(sizeof(char) * STRING_MAX_LENGTH);
+    int cPosition = 0;
+
+    //Controllo del segno
+    if(number < 0)
+        *(esito + cPosition++) = '-';
+
+    //Positivizzazione
+    number = number < 0 ? -number : number;
+
+    //Calcolo del vPointer e trasformazione del numero per avere come parte intera 0
+    int vPointer = 0;
+    while(((int)number) > 0) {
+        //Dividiamo per 10 in modo tale da spostare la virgola a sinistra fino a quando non si avrà 0,...
+        number /= 10;
+        vPointer ++;
+    }
+
+    //Operazione inversa, spostando la virgola a destra di una posizione alla volta in modo tale da trascrivere la parte intera sul buffer
+    while (number > 0.01 || vPointer > 0){
+        number *= 10;
+        //Se il vPointer(virgola pointer) è 0 e siamo entrati nel ciclo allora mettiamo il carattere del punto
+        if(vPointer == 0)
+            *(esito + cPosition++) = '.';
+
+        //Usiamo la trasposizione ascii per scrivere il carattere corretto
+        *(esito + cPosition++) = 48 + ((int)number);
+
+        //Togliamo la parte intera e decrementiamo il vpointer
+        number -= (int)number;
+        vPointer--;
+    }
+
+    *(esito + cPosition++) = '\0';
+
+    return esito;
+}
+
 void gotoXY(unsigned int x, unsigned int y){
     COORD coord = {x, y};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
@@ -170,4 +209,9 @@ void drawLine(Context *context, int x1, int y1, int x2, int y2, char character){
         startY += incY;
         drawPoint(context, (int)startX, (int)startY, character);
     }
+}
+
+void drawString(Context *context, char string[STRING_MAX_LENGTH], int x, int y){
+    for(int i = 0; i < STRING_MAX_LENGTH && string[i] != '\0'; i++)
+        drawPoint(context, x + i, y, string[i]);
 }

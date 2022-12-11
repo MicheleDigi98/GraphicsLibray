@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <windows.h>
 
+#define STRING_MAX_LENGTH 101
+
 /**
  * Definisce la struttura che rappresenta il contesto di grafica dell'applicazione
  */
@@ -18,6 +20,13 @@ typedef struct {
     unsigned char isValid;
     char *screen;
 } Context;
+
+/**
+ * Converte un numero in una stringa
+ * @param number Numero da convertire in stringa
+ * @return Restituisce un'array che rappresenta una stringa
+ */
+char* numberToString(float number);
 
 /**
  * Va nella posizione X, Y del prompt dei comanid
@@ -131,5 +140,14 @@ void drawRect(Context *context, int posX, int posY, int width, int height, char 
  * @param character Carattere di cui la linea è costituita
  */
 void drawLine(Context *context, int x1, int y1, int x2, int y2, char character);
+
+/**
+ * Disenga una stringa sullo schermo
+ * @param context Contesto su cui disegnare la stringa
+ * @param string Stringa da disegnare, con un massimo di 100 caratteri
+ * @param x Posizione X di disegno
+ * @param y Posizione Y di disegno
+ */
+void drawString(Context *context, char string[STRING_MAX_LENGTH], int x, int y);
 
 #endif //GRAPHICSLIBRAY_GRAPHICS_H

@@ -2,8 +2,9 @@
 #include "GameLoop/GameLoop.h"
 
 //Variabili globali
-int posX = 10;              //Indica la posizione X dell'elemento di esempio
+int posX = 14;              //Indica la posizione X dell'elemento di esempio
 int posY = 10;              //Indica la posizione Y dell'elemento di esempio
+
 
 /**
  * Tutto quello inserito all'interno di questo blocco viene eseguito ogni volta che lo schermo ha terminato di aggiornarsi
@@ -13,11 +14,11 @@ void update(Context *context){
     //Puliamo lo schermo
     clearScreen(context);
 
-    drawPoint(context, 1, 1, 'v');
-    drawPoint(context, 2, 1, ' ');
-    drawPoint(context, 3, 1, '1');
-    drawPoint(context, 4, 1, '.');
-    drawPoint(context, 5, 1, '0');
+    drawString(context, "v 1.0 ", 1, 1);
+    drawString(context, "posX: ", 1, 2);
+    drawString(context, numberToString(posX), 8, 2);
+    drawString(context, "posY: ", 1, 3);
+    drawString(context, numberToString(posY), 8, 3);
 
     //Il 178 è un carattere ASCII
     drawPoint(context, posX, posY, (char)178);
@@ -68,13 +69,15 @@ int main() {
 
     /*
      * Alcune funzioni utili:
-     * 1) initContex -> Inizializza e restituisce una struttura Context con le dimensioni di larghezza e altezza passate come parametro
-     * 2) destroyContex -> Termina e libera la memoria del contesto. Se ad esso è associato un gameLoop questo termina
-     * 3) void drawPoint(Context *context, int posX, int posY, char character) -> Disegna un punto sul contesto
-     * 4) void drawRect(Context *context, int posX, int posY, int width, int height, char character) -> Disegna un rettangolo sul contesto
-     * 5) void drawLine(Context *context, int x1, int y1, int x2, int y2, char character)-> Disegna una linea sul contesto
-     * 6) setColor(red, green, blue, intensity) Con valori ammessi solo 0 e 1 cambia il colore del cursore
-     * 7) setBGColor Come sopra ma cambia il colore del background
-     * 8) clearScreen(Context *context) -> Effettua la pulizia dello schermo
+     * Context initContex(int width, int height) -> Inizializza e restituisce una struttura Context con le dimensioni di larghezza e altezza passate come parametro
+     * void destroyContex(Context *context) -> Termina e libera la memoria del contesto. Se ad esso è associato un gameLoop questo termina
+     * void drawPoint(Context *context, int posX, int posY, char character) -> Disegna un punto sul contesto
+     * void drawRect(Context *context, int posX, int posY, int width, int height, char character) -> Disegna un rettangolo sul contesto
+     * void drawLine(Context *context, int x1, int y1, int x2, int y2, char character)-> Disegna una linea sul contesto
+     * void setColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char intensity) -> Cambia il colore del cursore per l'intero contesto, valori ammessi per parametro 0 e 1
+     * void setBGColor Come sopra ma cambia il colore del background
+     * void clearScreen(Context *context) -> Effettua la pulizia dello schermo
+     * void drawString(Context *context, char string[STRING_MAX_LENGTH], int x, int y) -> Disegna una stringa sul contesto
+     * char* numberToString(float number) -> Converte un numero float in una stringa
      */
 }
