@@ -29,8 +29,6 @@ void update(Context *context){
 
         drawString(context, "MouseY: ", 1, 5, stringColor);
         drawString(context, numberToString(mouseY), 9, 5, stringColor);
-
-        GetAsyncKeyState()
     }
 
     //Il 178 è un carattere ASCII
