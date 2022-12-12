@@ -71,6 +71,8 @@ void keyBoard(char character, Context* context){
  * @return
  */
 int main() {
+    playSound(500, 5000);                                                //Riproduce un suono di frequenza 500 per la durata di 5 secondi
+
     hideCursor();                                                                       //Nasconde il cursore
     Context context = initContext(80, 20);                                  //Inizializza un contesto di disegno 80*20
 
@@ -92,5 +94,7 @@ int main() {
      * void clearScreen(Context *context) -> Effettua la pulizia dello schermo
      * void drawString(Context *context, char string[STRING_MAX_LENGTH], int x, int y, unsigned short color) -> Disegna una stringa sul contesto
      * char* numberToString(float number) -> Converte un numero float in una stringa
+     * unsigned char mouseXY(int *mouseX, int *mouseY) -> Restituisce la posizione del mosuse sulla finstra. Il risultato viene dato con i puntatori alle posizioni, mentre l'esito della funzione è l'esito dell'operazione
+     * void playSound(unsigned int frequenza, unsigned int durata) -> Riproduce un suono della frequenza indicata per il numero di millisecondi indicata
      */
 }

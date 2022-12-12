@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <pthread.h>
 #include <windows.h>
 
 #define STRING_MAX_LENGTH 101
@@ -23,6 +24,13 @@ typedef struct {
     unsigned short *colorBuffer;
 } Context;
 
+
+/**
+ * Avvia la riproduzione di un suono per la durata indicata in maniera asincrona
+ * @param frequenza Frequenza del suono da riprodurre
+ * @param durata Durata della riproduzione in millisecondi
+ */
+void playSound(unsigned int frequenza, unsigned int durata);
 
 /**
  * Converte un numero in una stringa

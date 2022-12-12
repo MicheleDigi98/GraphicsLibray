@@ -4,6 +4,30 @@
 
 #include "Graphics.h"
 
+/**
+ * Funzione vista esclusivamente da questo documento
+ * Si occupa di eseguire in maniera asincrona la funzione beep per la riproduzione di un suono
+ * @param params Puntatore ai parametri
+ */
+void* beepFunction(void* params){
+    unsigned int* p = (unsigned  int*)params;
+    unsigned int frequenza = p[0];
+    unsigned int durata = p[1];
+    Beep(frequenza, durata);
+
+    //Liberiamo la memoria allocata da playSound
+    free(params);
+}
+
+void playSound(unsigned int frequenza, unsigned int durata){
+    unsigned int* params = malloc(2 * sizeof(unsigned int));
+    *params = frequenza;
+    *(params + 1) = durata;
+
+    pthread_t thread;
+    pthread_create(&thread, NULL, beepFunction, params);
+}
+
 char* numberToString(float number){
     char* esito = (char*)malloc(sizeof(char) * STRING_MAX_LENGTH);
     sprintf(esito, "%.2f", number);
