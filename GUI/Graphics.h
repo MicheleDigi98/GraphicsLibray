@@ -19,7 +19,10 @@ typedef struct {
     unsigned int height;
     unsigned char isValid;
     char *screen;
+    unsigned short *colorBuffer;
 } Context;
+
+
 
 /**
  * Converte un numero in una stringa
@@ -36,22 +39,14 @@ char* numberToString(float number);
 void gotoXY(unsigned int x, unsigned int y);
 
 /**
- * Imposta il colore con cui disegnare sul prompt, i valori possono assumere solo 0 o 1
- * @param red Presenza di rosso
- * @param green Presenza di verde
- * @param blue Presenza di blue
- * @param intensity Modificatore di intensità
+ * Genera un colore per il contesto grafico
+ * @param red Presenza del colore rosso 0-1
+ * @param green Presenza del colore verde 0-1
+ * @param blue Presenza del colore blu 0-1
+ * @param intensity Presenza di intensità nel colore 0-1
+ * @return Restituisce il valore di rappresentazione del colore
  */
-void setColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char intensity);
-
-/**
- * Imposta il colore di sfondo, i valori possono assumere solo 0 o 1
- * @param red Presenza di rosso
- * @param green Presenza di verde
- * @param blue Presenza di blue
- * @param intensity Modificatore di intensità
- */
-void setBGColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char intensity);
+unsigned short color(unsigned char red, unsigned char green, unsigned char blue, unsigned char intensity);
 
 /**
  * Nasconde il cursore
@@ -116,8 +111,9 @@ void destroyContext(Context *context);
  * @param posX Posizione X del punto da disegnare
  * @param posY Posizione Y del punto da disegnare
  * @param character Carattere da disegnare nella posizione indicata
+ * @param color Colore del punto da disegnare
  */
-void drawPoint(Context *context, int posX, int posY, char character);
+void drawPoint(Context *context, int posX, int posY, char character, unsigned short color);
 
 /**
  * Effettua il disegno di un rettangolo sullo schermo
@@ -127,8 +123,9 @@ void drawPoint(Context *context, int posX, int posY, char character);
  * @param width Larghezza del rettangolo
  * @param height Altezza del rettangolo
  * @param character Carattere di cui il rettangolo è costituito
+ * @param color Colore del rettangolo da disegnare
  */
-void drawRect(Context *context, int posX, int posY, int width, int height, char character);
+void drawRect(Context *context, int posX, int posY, int width, int height, char character, unsigned short color);
 
 /**
  * Disenga una linea sullo schermo
@@ -138,8 +135,9 @@ void drawRect(Context *context, int posX, int posY, int width, int height, char 
  * @param x2 Seconda coordinata x
  * @param y2 Seconda coordinata y
  * @param character Carattere di cui la linea è costituita
+ * @param color Colore della linea da disegnare
  */
-void drawLine(Context *context, int x1, int y1, int x2, int y2, char character);
+void drawLine(Context *context, int x1, int y1, int x2, int y2, char character, unsigned short color);
 
 /**
  * Disenga una stringa sullo schermo
@@ -147,7 +145,8 @@ void drawLine(Context *context, int x1, int y1, int x2, int y2, char character);
  * @param string Stringa da disegnare, con un massimo di 100 caratteri
  * @param x Posizione X di disegno
  * @param y Posizione Y di disegno
+ * @param color Colore della stringa da disegnare
  */
-void drawString(Context *context, char string[STRING_MAX_LENGTH], int x, int y);
+void drawString(Context *context, char string[STRING_MAX_LENGTH], int x, int y, unsigned short color);
 
 #endif //GRAPHICSLIBRAY_GRAPHICS_H

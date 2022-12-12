@@ -15,7 +15,7 @@ void gotoXY(unsigned int x, unsigned int y){
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void setColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char intensity){
+unsigned short color(unsigned char red, unsigned char green, unsigned char blue, unsigned char intensity) {
     unsigned short esito = 0x0;
     if(red)
         esito |= FOREGROUND_RED;
@@ -26,21 +26,7 @@ void setColor(unsigned char red, unsigned char green, unsigned char blue, unsign
     if(intensity)
         esito |= FOREGROUND_INTENSITY;
 
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), esito);
-}
-
-void setBGColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char intensity){
-    unsigned short esito = 0x0;
-    if(red)
-        esito |= BACKGROUND_RED;
-    if(green)
-        esito |= BACKGROUND_GREEN;
-    if(blue)
-        esito |= BACKGROUND_BLUE;
-    if(intensity)
-        esito |= BACKGROUND_INTENSITY;
-
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), esito);
+    return esito;
 }
 
 void hideCursor(){
@@ -59,8 +45,11 @@ void showCursor(){
 
 void clearScreen(Context *context){
     if(context != NULL && context->isValid){
-        for(int i = 0; i < context->width * context->height; i++)
-            context->screen[i] = (char)32;
+        unsigned short clearColor = color(1, 1,1, 0);
+        for(int i = 0; i < context->width * context->height; i++) {
+            context->screen[i] = (char) 32;
+            context->colorBuffer[i] = clearColor;
+        }
     }
 }
 
@@ -75,16 +64,20 @@ Context initContext(unsigned int width, unsigned int height){
     esito.height = height;
     esito.isValid = 0;
 
-    unsigned bufferSize = width * height * sizeof(char);
-    esito.screen = (char*)malloc(bufferSize);
+    esito.screen = (char*)malloc(width * height * sizeof(char));
+    esito.colorBuffer = (unsigned short*)malloc(width * height * sizeof(unsigned short));
 
     //Calcolo della validità del contesto
-    esito.isValid = esito.screen == NULL ? 0 : 1;
+    esito.isValid = (esito.screen == NULL || esito.colorBuffer == NULL) ? 0 : 1;
 
     if(esito.isValid){
         //Inizializziamo i valori dello schermo
-        for(int i = 0; i < width * height; i++)
-            esito.screen[i] = 32;
+        clearScreen(&esito);
+    }else{
+        if(esito.screen != NULL)
+            free(esito.screen);
+        if(esito.colorBuffer != NULL)
+            free(esito.colorBuffer);
     }
 
     return esito;
@@ -96,22 +89,23 @@ void drawFrame(Context *context){
         for(int i = 0; i < context->height; i++){
             for(int j = 0; j < context->width; j++){
                 unsigned int arrayPosition = calcArrayPosition(context->width, i, j);
+                unsigned short frameColor = color(1, 1, 1, 0);
 
                 //Costruzione delle righe verticali e orizzontali
                 if(i == 0 || i == context->height - 1)
-                    context->screen[arrayPosition] = (char)205;
+                    drawPoint(context, j, i, (char)205, frameColor);
                 if(j == 0 || j == context->width - 1)
-                    context->screen[arrayPosition] = (char)186;
+                    drawPoint(context, j, i, (char)186, frameColor);
 
                 //Costruzione degli angoli
                 if(i == 0 && j == 0)
-                    context->screen[arrayPosition] = (char)201;
+                    drawPoint(context, j, i, (char)201, frameColor);
                 if(i == 0 && j == context->width - 1)
-                    context->screen[arrayPosition] = (char)187;
+                    drawPoint(context, j, i, (char)187, frameColor);
                 if(i == context->height - 1 && j == 0)
-                    context->screen[arrayPosition] = (char)200;
+                    drawPoint(context, j, i, (char)200, frameColor);
                 if(i == context->height - 1 && j == context->width - 1)
-                    context->screen[arrayPosition] = (char)188;
+                    drawPoint(context, j, i, (char)188, frameColor);
             }
         }
     }
@@ -121,6 +115,7 @@ void destroyContext(Context *context){
     if(context != NULL && context->isValid) {
         context->isValid = 0;
         free(context->screen);
+        free(context->colorBuffer);
     }
 }
 
@@ -128,32 +123,36 @@ void drawContext(Context context){
     gotoXY(0, 0);
     if(context.isValid){
         for(int i = 0; i < context.height; i++){
-            for(int j = 0; j < context.width; j++)
-                printf("%c", context.screen[calcArrayPosition(context.width, i, j)]);
+            for(int j = 0; j < context.width; j++) {
+                unsigned int arrayPosition = calcArrayPosition(context.width, i, j);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), context.colorBuffer[arrayPosition]);
+                printf("%c", context.screen[arrayPosition]);
+            }
             //Manda a capo il prompt
             printf("\n");
         }
     }
 }
 
-void drawPoint(Context *context, int posX, int posY, char character){
+void drawPoint(Context *context, int posX, int posY, char character, unsigned short color){
     if(context != NULL && context->isValid){
-        if(posX >= 0 && posX < context->width - 1 && posY >= 0 && posY < context->height - 1){
+        if(posX >= 0 && posX < context->width && posY >= 0 && posY < context->height){
             //Controlla la validità delle coordinate di punto
 
             unsigned int arrayPosition = calcArrayPosition(context->width, posY, posX);
             context->screen[arrayPosition] = character;
+            context->colorBuffer[arrayPosition] = color;
         }
     }
 }
 
-void drawRect(Context *context, int posX, int posY, int width, int height, char character){
+void drawRect(Context *context, int posX, int posY, int width, int height, char character, unsigned short color){
     for(int i = 0; i < height; i++)
         for(int j = 0; j < width; j++)
-            drawPoint(context, posX + j, posY + i, character);
+            drawPoint(context, posX + j, posY + i, character, color);
 }
 
-void drawLine(Context *context, int x1, int y1, int x2, int y2, char character){
+void drawLine(Context *context, int x1, int y1, int x2, int y2, char character, unsigned short color){
     //Implementiamo la linea usando il dda
 
     //Calcoliamo le distanze tra i due punti
@@ -174,11 +173,11 @@ void drawLine(Context *context, int x1, int y1, int x2, int y2, char character){
     for(int i = 0; i < steps; i++){
         startX += incX;
         startY += incY;
-        drawPoint(context, (int)startX, (int)startY, character);
+        drawPoint(context, (int)startX, (int)startY, character, color);
     }
 }
 
-void drawString(Context *context, char string[STRING_MAX_LENGTH], int x, int y){
+void drawString(Context *context, char string[STRING_MAX_LENGTH], int x, int y, unsigned short color){
     for(int i = 0; i < STRING_MAX_LENGTH && string[i] != '\0'; i++)
-        drawPoint(context, x + i, y, string[i]);
+        drawPoint(context, x + i, y, string[i], color);
 }

@@ -37,8 +37,6 @@ void* keyboardInputFunction(void *gameLoopArgs){
 
 void startGameLoop(void (*updateFunction)(Context*), void (*onPressFunction)(char character, Context* contesto), Context *context){
     if(updateFunction != NULL && context != NULL && context->isValid){
-        updateFunction(context);
-
         GameLoopArgs* args = (GameLoopArgs*)malloc(sizeof(GameLoopArgs));
         args->updateFunction = updateFunction;
         args->onPressFunction = onPressFunction;
