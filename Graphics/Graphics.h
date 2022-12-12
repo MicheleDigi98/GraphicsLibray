@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #include <windows.h>
 
 #define STRING_MAX_LENGTH 101
@@ -23,7 +24,6 @@ typedef struct {
 } Context;
 
 
-
 /**
  * Converte un numero in una stringa
  * @param number Numero da convertire in stringa
@@ -37,6 +37,14 @@ char* numberToString(float number);
  * @param y Posizione Y del prompt
  */
 void gotoXY(unsigned int x, unsigned int y);
+
+/**
+ * Preleva la posizione del mouse sulla finestra
+ * @param mouseX Posizione x del mouse prelevata
+ * @param mouseY Posizione y del mouse prelevata
+ * @return Restituisce l'esito dell'operazione, 1 in caso di successo, 0 in caso di fallimento
+ */
+unsigned char mouseXY(int *mouseX, int *mouseY);
 
 /**
  * Genera un colore per il contesto grafico

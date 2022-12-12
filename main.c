@@ -1,4 +1,4 @@
-#include "GUI/Graphics.h"
+#include "Graphics/Graphics.h"
 #include "GameLoop/GameLoop.h"
 
 //Variabili globali
@@ -22,9 +22,20 @@ void update(Context *context){
     drawString(context, "posY: ", 1, 3, stringColor);
     drawString(context, numberToString(posY), 8, 3, stringColor);
 
+    int mouseX, mouseY;
+    if(mouseXY(&mouseX, &mouseY)){
+        drawString(context, "MouseX: ", 1, 4, stringColor);
+        drawString(context, numberToString(mouseX), 9, 4, stringColor);
+
+        drawString(context, "MouseY: ", 1, 5, stringColor);
+        drawString(context, numberToString(mouseY), 9, 5, stringColor);
+
+        GetAsyncKeyState()
+    }
+
     //Il 178 è un carattere ASCII
     unsigned short c = color(1, 0, 0, 1);
-    drawPoint(context, posX, posY, (char)178, c);
+    drawPoint(context, mouseX, mouseY, (char)178, c);
 }
 
 /**

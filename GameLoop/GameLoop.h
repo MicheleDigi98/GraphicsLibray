@@ -5,7 +5,7 @@
 #ifndef GRAPHICSLIBRAY_GAMELOOP_H
 #define GRAPHICSLIBRAY_GAMELOOP_H
 
-#include "../GUI/Graphics.h"
+#include "../Graphics/Graphics.h"
 #include <pthread.h>
 #include <conio.h>
 

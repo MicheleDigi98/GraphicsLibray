@@ -15,6 +15,22 @@ void gotoXY(unsigned int x, unsigned int y){
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
+unsigned char mouseXY(int *mouseX, int *mouseY){
+    unsigned char esito = 0;
+
+    POINT cursor;
+    if(GetCursorPos(&cursor))
+        if(ScreenToClient(GetConsoleWindow(), &cursor)){
+            CONSOLE_FONT_INFO fontInfo;
+            if(GetCurrentConsoleFont(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &fontInfo)){
+                *mouseX = cursor.x / fontInfo.dwFontSize.X;
+                *mouseY = cursor.y / fontInfo.dwFontSize.Y;
+                esito = 1;
+            }
+        }
+    return esito;
+}
+
 unsigned short color(unsigned char red, unsigned char green, unsigned char blue, unsigned char intensity) {
     unsigned short esito = 0x0;
     if(red)
