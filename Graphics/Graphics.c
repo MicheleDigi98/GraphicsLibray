@@ -20,7 +20,7 @@ void* beepFunction(void* params){
 }
 
 void playSound(unsigned int frequenza, unsigned int durata){
-    unsigned int* params = malloc(2 * sizeof(unsigned int));
+    unsigned int* params = (unsigned int*)malloc(2 * sizeof(unsigned int));
     *params = frequenza;
     *(params + 1) = durata;
 
